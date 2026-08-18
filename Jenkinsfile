@@ -1,20 +1,27 @@
-pipeline{
+pipeline {
     agent any
 
     tools {
-         maven 'maven'
-         jdk 'java'
+        maven 'maven'          // doit correspondre au nom déclaré dans Administrer Jenkins > Outils
     }
 
-    stages{
-        stage('checkout'){
-            steps{
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'github access', url: 'https://github.com/sreenivas449/java-hello-world-with-maven.git']]])
+    stages {
+        stage('Clone') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/kaye2512/java-hello-world-with-maven.git'
             }
         }
-        stage('build'){
-            steps{
-               bat 'mvn package'
+
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+
+        stage('Run') {
+            steps {
+                sh 'java -jar target/*.jar'
             }
         }
     }
