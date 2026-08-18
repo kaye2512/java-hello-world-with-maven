@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        maven 'maven'          // doit correspondre au nom déclaré dans Administrer Jenkins > Outils
+        maven 'maven'          
     }
 
     stages {
